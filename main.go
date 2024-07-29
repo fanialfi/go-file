@@ -36,6 +36,34 @@ func createFile() {
 	fmt.Println("file berhasil di buat", path)
 }
 
+func writeFile() {
+	// buka file dengan level akses write
+	file, err := os.OpenFile(path, os.O_RDWR, 0644)
+	if isError(err) {
+		return
+	}
+	defer file.Close()
+
+	data := `hai nama saya fani
+saya sedang belajar golang file
+lebih tepatnya sedang belajar cara mengisi data kedalam file di golang gogogo
+`
+
+	_, err = file.WriteString(data)
+	if isError(err) {
+		return
+	}
+
+	// simpan perubahan file
+	err = file.Sync()
+	if isError(err) {
+		return
+	}
+
+	fmt.Println("file berhasil di isi")
+}
+
 func main() {
 	createFile()
+	writeFile()
 }
